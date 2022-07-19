@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flight price prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;900&display=swap');
+
+*, body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background-color: #152733;
+    overflow: hidden;
+}
+
+
+.form-holder {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+}
+
+.form-holder .form-content {
+    position: relative;
+    text-align: center;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 60px;
+}
+
+.form-content .form-items {
+    border: 3px solid #fff;
+    padding: 40px;
+    display: inline-block;
+    width: 100%;
+    min-width: 540px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    text-align: left;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+.form-content h3 {
+    color: #fff;
+    text-align: left;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.form-content h3.form-title {
+    margin-bottom: 30px;
+}
+
+.form-content p {
+    color: #fff;
+    text-align: left;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 20px;
+    margin-bottom: 30px;
+}
+
+
+.form-content label, .was-validated .form-check-input:invalid~.form-check-label, .was-validated .form-check-input:valid~.form-check-label{
+    color: #fff;
+}
+
+.form-content input[type=text], .form-content input[type=password], .form-content input[type=email], .form-content select {
+    width: 100%;
+    padding: 9px 20px;
+    text-align: left;
+    border: 0;
+    outline: 0;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 15px;
+    font-weight: 300;
+    color: #8D8D8D;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    margin-top: 16px;
+}
+
+
+.btn-primary{
+    background-color: #6C757D;
+    outline: none;
+    border: 0px;
+     box-shadow: none;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active{
+    background-color: #495056;
+    outline: none !important;
+    border: none !important;
+     box-shadow: none;
+}
+
+.form-content textarea {
+    position: static !important;
+    width: 100%;
+    padding: 8px 20px;
+    border-radius: 6px;
+    text-align: left;
+    background-color: #fff;
+    border: 0;
+    font-size: 15px;
+    font-weight: 300;
+    color: #8D8D8D;
+    outline: none;
+    resize: none;
+    height: 120px;
+    -webkit-transition: none;
+    transition: none;
+    margin-bottom: 14px;
+}
+
+.form-content textarea:hover, .form-content textarea:focus {
+    border: 0;
+    background-color: #ebeff8;
+    color: #8D8D8D;
+}
+
+.mv-up{
+    margin-top: -9px !important;
+    margin-bottom: 8px !important;
+}
+
+.invalid-feedback{
+    color: #ff606e;
+}
+
+.valid-feedback{
+   color: #2acc80;
+}
+    </style>
+
+</head>
+<body style="overflow:auto;">
+
+            <!-- <div class="form-holder"> -->
+                <div class="form-content" style="width: 20%; margin-top: 50px; margin-left: 120px; margin-bottom: 50px;">
+                    <div class="form-items">
+                        <h3>Register Today</h3>
+                        <p>Fill in the data below.</p>
+                        <form action="/predict" method="POST" class="requires-validation" novalidate>
+                            <h5 class="card-title" style="color:white">Departure Date and Time</h5>
+                            <div class="card">
+                                <div class="card-body">
+                                    <!-- Departure -->
+                                    <input type="datetime-local" name="dep_time" id="dep_time" required="required">
+                                    <div class="valid-feedback">You selected a date and time!</div>
+                                    <div class="invalid-feedback">Please select Departure Date and Time!</div>
+                                </div>
+                            </div>
+                            <br><h5 class="card-title" style="color:white">Arrival Date and Time</h5>
+                    <div class="card">
+                        <div class="card-body">
+                                <input type="datetime-local" name="arr_time" id="arr_time" required="required">
+                                <div class="valid-feedback">You selected a Date and time!</div>
+                            <div class="invalid-feedback">Please select arrival Date and Time!</div>
+                        </div>
+                    </div>
+
+                           <div class="col-md-12">
+                               <h5 class="card-title" style="color:white;">Source</h5>
+                                <select class="form-select mt-3" name="source" id="source" required>
+                                      <option selected disabled value="">Select</option>
+                                      <option >Delhi</option>
+                                      <option >Kolkata</option>
+                                      <option >Chennai</option>
+                                      <option >Mumbai</option>
+                               </select>
+                                <div class="valid-feedback">You selected a position!</div>
+                                <div class="invalid-feedback">Please select a position!</div>
+                           </div>
+
+                            <div class="col-md-12">
+                               <h5 class="card-title" style="color:white">Destination</h5>
+                                <select class="form-select mt-3" name="destination" id="destination" required>
+                                      <option selected disabled value="">Select</option>
+                                      <option >Cochin</option>
+                                      <option >Delhi</option>
+                                      <option >New Delhi</option>
+                                      <option >Hyderabad</option>
+                                      <option >Kolkata</option>
+                               </select>
+                                <div class="valid-feedback">You selected a position!</div>
+                                <div class="invalid-feedback">Please select a position!</div>
+                           </div>
+
+                            <div class="col-md-12">
+                               <h5 class="card-title" style="color:white">Stopage</h5>
+                                <select class="form-select mt-3" name="stopage" id="stopage" required>
+                                      <option selected disabled value="">Select</option>
+                                      <option value="0">Non-Stop</option>
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                               </select>
+                                <div class="valid-feedback">You selected a position!</div>
+                                <div class="invalid-feedback">Please select a position!</div>
+                           </div>
+
+                            <div class="col-md-12">
+                               <h5 class="card-title" style="color:white">Which Airline you want to travel?</h5>
+                                <select class="form-select mt-3" name="airline" id="airline" required>
+                                      <option selected disabled value="">Select</option>
+                                      <option >IndiGo</option>
+                                      <option >Air Asia</option>
+                                      <option >Air India</option>
+                                      <option >Jet Airways</option>
+                                      <option >Trujet</option>
+                                      <option >SpiceJet</option>
+                                      <option >Vistara</option>
+                                      <option >GoAir</option>
+                                      <option >Multiple carriers</option>
+                                      <option >Vistara Premium economy</option>
+                                      <option >Multiple carriers Premium economy</option>
+                                      <option >Jet Airways Business</option>
+                               </select>
+                                <div class="valid-feedback">You selected a position!</div>
+                                <div class="invalid-feedback">Please select a position!</div>
+                           </div>
+
+                            <div class="form-button mt-3">
+                                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {% if prediction %}
+            <!-- <div class="form-holder"> -->
+                <div class="form-content" style="width: 20%; float: right; margin-right: 350px; margin-top: -600px;">
+                    <div class="form-items">
+                        <h4 style="color:white">price: Rs. {{ prediction }}</h4>
+                        <h6 style="color:white;">From: {{source}}</h6>
+                        <h6 style="color:white;">To: {{destination}}</h6>
+                        <h6 style="color:white;">departure Date and Time: {{dep_day}} {{dep_time}}</h6>
+<!--                        <h6 style="color:white;">departure time: {{dep_time}}</h6>-->
+                        <h6 style="color:white;">Arrival Date: {{arr_date}}</h6>
+                        <h6 style="color:white;">Arrival Time: {{arr_time}}</h6>
+                        <h6 style="color:white;">Total Stops: {{stops}}</h6>
+                        <h6 style="color:white;">Airline: {{airlines}}</h6>
+
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+    <script>(function () {
+'use strict'
+const forms = document.querySelectorAll('.requires-validation')
+Array.from(forms)
+  .forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>
+</body>
+</html>
