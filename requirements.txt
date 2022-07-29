@@ -1,4 +1,6 @@
-pandas
 flask
 flask_cors
+pandas
 gunicorn
+sklearn
+numpy
