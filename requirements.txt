@@ -1,8 +1,3 @@
-numpy
 pandas
-matplotlib
-seaborn
-sklearn
-pickle
 flask
 flask_cors
